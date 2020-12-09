@@ -1,14 +1,21 @@
 package test.manager;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 
-public abstract class Manager <T> {
-    protected List<T> list;
+public abstract class Manager <T> implements Serializable {
+    public T[] list;
+    public int length;
+    public int length_max = 50;
 
     public Manager(){
-        list = new ArrayList<>();
+        list = (T[]) new Object[length_max];
+        length = 0;
     }
+
+    public T[] getList() {
+        return list;
+    }
+
 
     /**
      * thêm phần tử vào danh sách
@@ -16,18 +23,38 @@ public abstract class Manager <T> {
      * @return true nếu thêm thành công
      */
     public boolean add(T element){
-        return list.add(element);
+        if (length >= 0 && length < length_max){
+            list[length] = element;
+            length++;
+            return true;
+        }
+        return false;
+    }
+
+    public T get(int i){
+        return (T) list[i];
+    }
+
+    public void set(int i, T t){
+        list[i] = t;
+    }
+
+    public T remove(int index){
+        T t = list[index];
+        for (int i = index; i < length - 1; i++) {
+            list[i] = list[i + 1];
+        }
+        length--;
+        return t;
     }
 
     /**
      * hiển thị tất cả các phần tử trong danh sách
      */
     public void viewAllElement(){
-        list.forEach(System.out::println);
-    }
-
-    public int size(){
-        return list.size();
+        for (int i = 0; i < length; i++) {
+            System.out.println(list[i].toString());
+        }
     }
 
     /**

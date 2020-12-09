@@ -6,6 +6,7 @@ import test.data.User;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -13,11 +14,11 @@ public class ManagerUser extends ManagerLibObject<User> {
 
     public User getAccount(String username, String password) {
         try {
-            return list.stream()
+            return Arrays.stream(list)
                     .filter(user -> user.getName().equals(username) && user.getPassword().equals(password))
                     .findFirst()
                     .get();
-        }catch (NoSuchElementException e){
+        }catch (Exception e){
             System.out.println("Tài khoảng hoặc mật khẩu sai");
             return null;
         }
@@ -33,27 +34,21 @@ public class ManagerUser extends ManagerLibObject<User> {
      */
     @Override
     public boolean loadData() {
-//        Card cardNghi = Card.create("nghi", "004");
-//        cardNghi.setPower(Power.MEMBER);
-//        list.add(User.create(cardNghi, "123"));
-//
-//        Card cardLuan = Card.create("luan", "004");
-//        cardLuan.setPower(Power.ADMIN);
-//        list.add(User.create(cardLuan, "123"));
-
-        List<User> listUser = null;
+        ManagerUser managerUser = new ManagerUser();
 
         try{
             FileInputStream readData = new FileInputStream("data_user.txt");
             ObjectInputStream readStream = new ObjectInputStream(readData);
-            listUser = (ArrayList<User>) readStream.readObject();
+            managerUser = (ManagerUser) readStream.readObject();
             readStream.close();
         }catch (IOException | ClassNotFoundException e) {
             System.out.println("system: Data rỗng. Bắt đầu tạo mới");
             new ManagerUser().saveData();
             return false;
         }
-        list = listUser;
+
+        list = managerUser.getList();
+        length = managerUser.length;
 
         return true;
     }
@@ -64,7 +59,7 @@ public class ManagerUser extends ManagerLibObject<User> {
             FileOutputStream writeData = new FileOutputStream("data_user.txt");
             ObjectOutputStream writeStream = new ObjectOutputStream(writeData);
 
-            writeStream.writeObject(list);
+            writeStream.writeObject(this);
             writeStream.flush();
             writeStream.close();
 

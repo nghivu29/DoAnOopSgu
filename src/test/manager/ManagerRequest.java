@@ -8,6 +8,7 @@ import test.data.User;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,8 +55,8 @@ public class ManagerRequest extends ManagerLibAction<Request> {
         if (managerBook2 == null) return false;
         ManagerBook managerBook3 = managerBook2.getBooksByBorrowStatus(BorrowStatus.AVAILABLE);
         if (managerBook3 == null) return false;
-        if (managerBook3.size() > 0){
-            Book book = managerBook3.list.get(0);
+        if (managerBook3.length > 0){
+            Book book = managerBook3.get(0);
             request.setHaveBook(true);
             request.setBook(book);
             request.setBookStatusBefore(book.getBookStatus());
@@ -69,33 +70,36 @@ public class ManagerRequest extends ManagerLibAction<Request> {
     }
 
     public void acceptAllRequest(){
-        list.forEach(this::acceptRequest);
+        for (int i = 0; i < length; i++) {
+            acceptRequest(get(i));
+        }
     }
 
     public ManagerRequest getRequestsByUser(User user) {
         ManagerRequest manager = new ManagerRequest();
         manager.loadData();
-        manager.list = list.stream()
+        manager.list = (Request[]) Arrays.stream(list)
                 .filter(request -> request.getUser().getName().equals(user.getName()))
-                .collect(Collectors.toList());
+                .toArray();
         return manager;
     }
 
     @Override
     public boolean loadData() {
-        List<Request> listRequest = new ArrayList<>();
+        ManagerRequest managerRequest = new ManagerRequest();
 
         try{
             FileInputStream readData = new FileInputStream("data_request.txt");
             ObjectInputStream readStream = new ObjectInputStream(readData);
-            listRequest = (ArrayList<Request>) readStream.readObject();
+            managerRequest = (ManagerRequest) readStream.readObject();
             readStream.close();
         }catch (IOException | ClassNotFoundException e) {
             System.out.println("system: Data rỗng. Bắt đầu tạo mới");
             new ManagerRequest().saveData();
             return false;
         }
-        list = listRequest;
+        list = managerRequest.getList();
+        length = managerRequest.length;
 
         return true;
     }
@@ -103,10 +107,10 @@ public class ManagerRequest extends ManagerLibAction<Request> {
     @Override
     public boolean saveData() {
         try{
-                FileOutputStream writeData = new FileOutputStream("data_request.txt");
+            FileOutputStream writeData = new FileOutputStream("data_request.txt");
             ObjectOutputStream writeStream = new ObjectOutputStream(writeData);
 
-            writeStream.writeObject(list);
+            writeStream.writeObject(this);
             writeStream.flush();
             writeStream.close();
 
@@ -118,7 +122,7 @@ public class ManagerRequest extends ManagerLibAction<Request> {
     }
 
     public Request getRequestsById(String code) {
-        return list.stream().filter(request -> request.getId().equals(code))
+        return Arrays.stream(list).filter(request -> request.getId().equals(code))
                 .findFirst().get();
     }
 }

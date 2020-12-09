@@ -73,7 +73,7 @@ public class SceneManagerBook extends Scene{
             reloadScene();
         }
         Book book = Book.create(bookNameInput, bookPriceInput);
-        book.setId(String.format("%d", manager.size()));
+        book.setId(String.format("%d", manager.length));
 
         manager.add(book);
         manager.saveData();

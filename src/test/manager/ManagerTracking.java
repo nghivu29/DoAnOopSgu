@@ -7,6 +7,7 @@ import test.data.Tracking;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ManagerTracking extends ManagerLibAction<Tracking> {
@@ -49,7 +50,7 @@ public class ManagerTracking extends ManagerLibAction<Tracking> {
     public Tracking getTrackingByBookId(String id){
         Tracking tracking = null;
          try {
-             tracking = list.stream().filter(t -> t.getBook().getId().equals(id))
+             tracking = Arrays.stream(list).filter(t -> t.getBook().getId().equals(id))
                      .findFirst()
                      .get();
          }catch (Exception e){
@@ -64,7 +65,7 @@ public class ManagerTracking extends ManagerLibAction<Tracking> {
             FileOutputStream writeData = new FileOutputStream("data_tracking.txt");
             ObjectOutputStream writeStream = new ObjectOutputStream(writeData);
 
-            writeStream.writeObject(list);
+            writeStream.writeObject(this);
             writeStream.flush();
             writeStream.close();
 
@@ -77,19 +78,20 @@ public class ManagerTracking extends ManagerLibAction<Tracking> {
 
     @Override
     public boolean loadData() {
-        List<Tracking> listTracking = new ArrayList<>();
+        ManagerTracking managerTracking = new ManagerTracking();
 
         try{
             FileInputStream readData = new FileInputStream("data_tracking.txt");
             ObjectInputStream readStream = new ObjectInputStream(readData);
-            listTracking = (ArrayList<Tracking>) readStream.readObject();
+            managerTracking = (ManagerTracking) readStream.readObject();
             readStream.close();
         }catch (IOException | ClassNotFoundException e) {
             System.out.println("system: Data rỗng. Bắt đầu tạo mới");
             new ManagerTracking().saveData();
             return false;
         }
-        list = listTracking;
+        list = managerTracking.getList();
+        length = managerTracking.length;
 
         return true;
     }

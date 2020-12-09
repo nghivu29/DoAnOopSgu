@@ -2,6 +2,8 @@ package test.manager;
 
 import test.data.LibAction;
 
+import java.util.Arrays;
+
 public class ManagerLibAction<T extends LibAction> extends Manager<T> {
 
 
@@ -12,7 +14,7 @@ public class ManagerLibAction<T extends LibAction> extends Manager<T> {
      */
     ManagerLibAction<T> getActionsByCardId(String id) {
         ManagerLibAction<T> manager = new ManagerLibAction<>();
-        list.forEach(t -> {
+        Arrays.stream(list).forEach(t -> {
             if (t.getUser().getId().equals(id))
                 manager.add(t);
         });

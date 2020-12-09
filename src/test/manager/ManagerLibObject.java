@@ -2,6 +2,8 @@ package test.manager;
 
 import test.data.LibObject;
 
+import java.util.Arrays;
+
 public class ManagerLibObject <T extends LibObject> extends Manager<T> {
 
     public ManagerLibObject() {
@@ -24,7 +26,7 @@ public class ManagerLibObject <T extends LibObject> extends Manager<T> {
      * @return phần tử cẩn tìm
      */
     public T getElementById(String id){
-        return list.stream()
+        return Arrays.stream(list)
                 .filter(t -> t.getId().equals(id))
                 .findFirst()
                 .get();
@@ -36,8 +38,9 @@ public class ManagerLibObject <T extends LibObject> extends Manager<T> {
      * @return true nếu phần tử này có trong list và đã xóa thành công
      */
     public boolean removeElementById(String id){
-        T obj = getElementById(id);
-        return list.remove(obj);
+//        T obj = getElementById(id);
+//        return list.remove(obj);
+        return false;
     }
 
     /**
@@ -47,10 +50,10 @@ public class ManagerLibObject <T extends LibObject> extends Manager<T> {
      */
     public ManagerLibObject<T> getElementsByName(String name){
         ManagerLibObject<T> manager = new ManagerLibObject<>();
-        list.forEach(t -> {
-            if (t.getName().equals(name))
-                manager.add(t);
-        });
+        for (int i = 0; i < length; i++) {
+            if (get(i).getName().equals(name))
+                manager.add(get(i));
+        }
         return manager;
     }
 

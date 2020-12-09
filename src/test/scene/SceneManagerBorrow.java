@@ -35,13 +35,13 @@ public class SceneManagerBorrow extends Scene{
         addFunction(this::showMenu);
         addFunction(this::viewAllRequest);
         addFunction(this::acceptAllRequest);
-        addFunction(this::acceptAllRequestWithID);
+        addFunction(this::acceptRequestWithID);
         addFunction(this::backToMenuAdmin);
 
         return true;
     }
 
-    private void acceptAllRequestWithID() {
+    private void acceptRequestWithID() {
         reloadScene();
     }
 

@@ -42,7 +42,7 @@ public class SceneRequestBorrowBook extends Scene{
         Request request = Request.create(user, bookNameInput);
         ManagerRequest manager = new ManagerRequest();
         if (manager.loadData()){
-            request.setId(String.format("%d", manager.size()));
+            request.setId(String.format("%d", manager.length));
             manager.add(request);
             if (manager.saveData()){
                 System.out.println("system: đã gửi yêu cầu thành công");

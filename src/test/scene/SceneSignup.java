@@ -48,7 +48,7 @@ public class SceneSignup extends Scene{
             card.setAddress(addressInput);
             card.setValid_from(LocalDate.now());
             card.setValid_thru(LocalDate.now().plusYears(1));
-            card.setId(String.format("M%d", managerUser.size()));
+            card.setId(String.format("M%d", managerUser.length));
             if (adminCodeInput.equals("admin"))
                 card.setPower(Power.ADMIN);
             else card.setPower(Power.MEMBER);
@@ -86,7 +86,7 @@ public class SceneSignup extends Scene{
     private boolean checkUsernameExist() {
         ManagerUser managerUser = new ManagerUser();
         managerUser.loadData();
-        if (managerUser.getElementsByName(nameInput).size()>0)
+        if (managerUser.getElementsByName(nameInput).length>0)
             return true;
         return false;
     }

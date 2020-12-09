@@ -4,6 +4,7 @@ import test.data.*;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ManagerBook extends ManagerLibObject<Book> {
@@ -16,18 +17,19 @@ public class ManagerBook extends ManagerLibObject<Book> {
     }
 
     public Book getBookById(String id){
-        for(Book book : list){
-            if (book.getId().equals(id))
-                return book;
+        for (int i = 0; i < length; i++) {
+            if (get(i).getId().equals(id))
+                return get(i);
         }
         return null;
     }
 
     public ManagerBook getBooksByBorrowStatus(BorrowStatus status){
         ManagerBook managerBook = new ManagerBook();
-        for(Book book : list){
-            if (book.getBorrowStatus()==status)
-                managerBook.list.add(book);
+
+        for (int i = 0; i < length; i++) {
+            if (get(i).getBorrowStatus()==status)
+                managerBook.add(get(i));
         }
         return managerBook;
     }
@@ -38,7 +40,10 @@ public class ManagerBook extends ManagerLibObject<Book> {
 
     public ManagerBook getBooksByName(String name) {
         ManagerBook managerBook = new ManagerBook();
-        getElementsByName(name).list.forEach(book -> managerBook.list.add(book));
+        for (int i = 0; i < length; i++) {
+            if (get(i).getName().equals(name))
+                managerBook.add(get(i));
+        }
         return managerBook;
     }
 
@@ -55,19 +60,21 @@ public class ManagerBook extends ManagerLibObject<Book> {
 //        this.add(Book.create("Sach Giao Khoa", 0));
 //        this.add(Book.create("Sach Trang", 0));
 
-        List<Book> listRequest = null;
+        ManagerBook managerBook = new ManagerBook();
 
         try{
             FileInputStream readData = new FileInputStream("data_book.txt");
             ObjectInputStream readStream = new ObjectInputStream(readData);
-            listRequest = (ArrayList<Book>) readStream.readObject();
+            managerBook = (ManagerBook) readStream.readObject();
             readStream.close();
-        }catch (IOException | ClassNotFoundException e) {
+        }catch (Exception e) {
             System.out.println("system: Data rỗng. Bắt đầu tạo mới");
             new ManagerBook().saveData();
             return false;
         }
-        list = listRequest;
+
+        list = managerBook.getList();
+        length = managerBook.length;
 
         return true;
     }
@@ -82,7 +89,7 @@ public class ManagerBook extends ManagerLibObject<Book> {
             FileOutputStream writeData = new FileOutputStream("data_book.txt");
             ObjectOutputStream writeStream = new ObjectOutputStream(writeData);
 
-            writeStream.writeObject(list);
+            writeStream.writeObject(this);
             writeStream.flush();
             writeStream.close();
 

@@ -36,7 +36,9 @@ public class ManagerScene extends Manager<Scene> {
      * @return scene bị thay thế
      */
     public Scene replaceScene(Scene scene){
-        return list.set(list.size()-1, scene);
+        Scene toReturn = get(length-1);
+        set(length-1, scene);
+        return toReturn;
     }
 
     /**
@@ -45,7 +47,7 @@ public class ManagerScene extends Manager<Scene> {
      * @return true nếu thêm thành công
      */
     public boolean pushScene(Scene scene){
-        return list.add(scene);
+        return add(scene);
     }
 
     /**
@@ -53,14 +55,14 @@ public class ManagerScene extends Manager<Scene> {
      * @return scene bị đẩy ra
      */
     public Scene popScene(){
-        return list.remove(list.size()-1);
+        return remove(length-1);
     }
 
     /**
      * tải lên màn hình scene ở cuối list
      */
     public void display(){
-        list.get(list.size()-1).display();
+        get(length-1).display();
     }
 
 }
