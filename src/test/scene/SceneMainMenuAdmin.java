@@ -3,6 +3,8 @@ package test.scene;
 import test.data.User;
 import test.manager.ManagerScene;
 
+import java.io.IOException;
+
 /**
  * làm tương tự scene login
  */
@@ -118,6 +120,11 @@ public class SceneMainMenuAdmin extends SceneMainMenuMember{
 
     @Override
     protected void reloadScene() {
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("system: Tải lại Scene menu của admin");
         ManagerScene.getInstance().replaceScene(SceneMainMenuAdmin.create(user));
         ManagerScene.getInstance().display();

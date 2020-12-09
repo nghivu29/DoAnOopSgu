@@ -5,6 +5,7 @@ import test.data.User;
 import test.manager.ManagerRequest;
 import test.manager.ManagerScene;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class SceneRequestBorrowBook extends Scene{
@@ -64,6 +65,11 @@ public class SceneRequestBorrowBook extends Scene{
     }
 
     private void backToSceneMainMenuMember() {
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("system: trở về Scene menu của thành viên");
         ManagerScene.getInstance().popScene();
         ManagerScene.getInstance().display();

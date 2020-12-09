@@ -5,6 +5,7 @@ import test.data.User;
 import test.manager.ManagerBook;
 import test.manager.ManagerScene;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class SceneManagerBook extends Scene{
@@ -34,9 +35,19 @@ public class SceneManagerBook extends Scene{
 
         addFunction(this::showMenu);
         addFunction(this::addBook);
+        addFunction(this::editBook);
+        addFunction(this::deleteBook);
         addFunction(this::backToMenuAdmin);
 
         return true;
+    }
+
+    private void editBook() {
+        reloadScene();
+    }
+
+    private void deleteBook() {
+        reloadScene();
     }
 
 
@@ -68,7 +79,9 @@ public class SceneManagerBook extends Scene{
 
     private void showMenu() {
         System.out.println("1. Thêm sách");
-        System.out.println("2. Quay lại menu của admin");
+        System.out.println("2. Sửa sách");
+        System.out.println("3. Xóa sách");
+        System.out.println("4. Quay lại menu của admin");
         inputListener();
         onChooseDone();
     }
@@ -83,6 +96,12 @@ public class SceneManagerBook extends Scene{
             case 2:
                 functions.get(2).run();
                 break;
+            case 3:
+                functions.get(3).run();
+                break;
+            case 4:
+                functions.get(4).run();
+                break;
 
             default:
                 reloadScene();
@@ -90,6 +109,11 @@ public class SceneManagerBook extends Scene{
     }
 
     private void reloadScene() {
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("system: Tải lại Scene quản lý sách");
         ManagerScene.getInstance().replaceScene(SceneManagerBook.create(user));
         ManagerScene.getInstance().display();

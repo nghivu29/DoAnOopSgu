@@ -5,6 +5,7 @@ import test.manager.ManagerBook;
 import test.manager.ManagerRequest;
 import test.manager.ManagerScene;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -137,6 +138,11 @@ public class SceneMainMenuMember extends Scene{
     }
 
     protected void reloadScene(){
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("system: Tải lại Scene menu của thành viên");
         ManagerScene.getInstance().replaceScene(SceneMainMenuMember.create(user));
         ManagerScene.getInstance().display();

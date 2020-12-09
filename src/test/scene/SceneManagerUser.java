@@ -4,6 +4,7 @@ import test.data.User;
 import test.manager.ManagerScene;
 import test.manager.ManagerUser;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class SceneManagerUser extends Scene{
@@ -32,9 +33,24 @@ public class SceneManagerUser extends Scene{
 
         addFunction(this::showMenu);
         addFunction(this::viewALlUser);
+        addFunction(this::addUser);
+        addFunction(this::editUser);
+        addFunction(this::deleteUser);
         addFunction(this::backToMenuAdmin);
 
         return true;
+    }
+
+    private void deleteUser() {
+        reloadScene();
+    }
+
+    private void editUser() {
+        reloadScene();
+    }
+
+    private void addUser() {
+        reloadScene();
     }
 
     private void backToMenuAdmin() {
@@ -52,7 +68,10 @@ public class SceneManagerUser extends Scene{
 
     private void showMenu() {
         System.out.println("1. Xem tất cả các user");
-        System.out.println("2. Quay lại menu của admin");
+        System.out.println("2. Thêm user");
+        System.out.println("3. Sửa thông tin user");
+        System.out.println("4. Xóa user");
+        System.out.println("5. Quay lại menu của admin");
         inputListener();
         onChooseDone();
     }
@@ -67,6 +86,15 @@ public class SceneManagerUser extends Scene{
             case 2:
                 functions.get(2).run();
                 break;
+            case 3:
+                functions.get(3).run();
+                break;
+            case 4:
+                functions.get(4).run();
+                break;
+            case 5:
+                functions.get(5).run();
+                break;
 
             default:
                 reloadScene();
@@ -74,6 +102,11 @@ public class SceneManagerUser extends Scene{
     }
 
     private void reloadScene() {
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("system: Tải lại Scene quản user");
         ManagerScene.getInstance().replaceScene(SceneManagerUser.create(user));
         ManagerScene.getInstance().display();

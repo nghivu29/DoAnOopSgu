@@ -3,6 +3,7 @@ package test.scene;
 import test.data.*;
 import test.manager.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -137,6 +138,11 @@ public class SceneManagerTracking extends Scene{
     }
 
     private void reloadScene() {
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("system: Tải lại Scene theo dõi mượn trả");
         ManagerScene.getInstance().replaceScene(SceneManagerTracking.create(user));
         ManagerScene.getInstance().display();

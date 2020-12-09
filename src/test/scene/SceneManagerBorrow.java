@@ -4,6 +4,7 @@ import test.data.User;
 import test.manager.ManagerRequest;
 import test.manager.ManagerScene;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class SceneManagerBorrow extends Scene{
@@ -34,9 +35,14 @@ public class SceneManagerBorrow extends Scene{
         addFunction(this::showMenu);
         addFunction(this::viewAllRequest);
         addFunction(this::acceptAllRequest);
+        addFunction(this::acceptAllRequestWithID);
         addFunction(this::backToMenuAdmin);
 
         return true;
+    }
+
+    private void acceptAllRequestWithID() {
+        reloadScene();
     }
 
     private void acceptAllRequest() {
@@ -57,7 +63,8 @@ public class SceneManagerBorrow extends Scene{
     private void showMenu() {
         System.out.println("1. Xem tất cả các yêu cầu mượn sách");
         System.out.println("2. Tự động đồng ý tất cả các yêu cầu mượn sách");
-        System.out.println("3. Quay lại menu của admin");
+        System.out.println("3. Đồng ý yêu cầu mươn theo mã số");
+        System.out.println("4. Quay lại menu của admin");
         inputListener();
         onChooseDone();
     }
@@ -87,9 +94,9 @@ public class SceneManagerBorrow extends Scene{
             case 3:
                 functions.get(3).run();
                 break;
-//            case 4:
-//                functions.get(4).run();
-//                break;
+            case 4:
+                functions.get(4).run();
+                break;
 //            case 5:
 //                functions.get(5).run();
 //                break;
@@ -99,6 +106,11 @@ public class SceneManagerBorrow extends Scene{
     }
 
     private void reloadScene() {
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("system: Tải lại Scene quản lý yêu cầu mượn sách");
         ManagerScene.getInstance().replaceScene(SceneManagerBorrow.create(user));
         ManagerScene.getInstance().display();
