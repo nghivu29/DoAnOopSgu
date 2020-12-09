@@ -87,7 +87,12 @@ public class SceneManagerBook extends Scene{
     }
 
     private void onChooseDone() {
-        int choose = Integer.parseInt(this.chooseInput);
+        int choose = -1;
+        try {
+            choose = Integer.parseInt(this.chooseInput);
+        }catch (NumberFormatException e){
+            System.out.println(e.getMessage());
+        }
 
         switch (choose) {
             case 1:

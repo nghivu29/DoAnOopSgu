@@ -59,7 +59,13 @@ public class SceneStart extends Scene{
     }
 
     private void onChooseDone() {
-        int choose = Integer.parseInt(this.input);
+        int choose = -1;
+        try {
+            choose = Integer.parseInt(this.input);
+        }catch (NumberFormatException e){
+            System.out.println(e.getMessage());
+        }
+
 
         switch (choose){
             case 1:

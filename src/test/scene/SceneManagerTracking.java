@@ -50,7 +50,14 @@ public class SceneManagerTracking extends Scene{
 
         ManagerRequest managerRequest = new ManagerRequest();
         managerRequest.loadData();
-        Request request = managerRequest.getRequestsById(code);
+        Request request = null;
+
+        try {
+            request = managerRequest.getRequestsById(code);
+        }catch (Exception e){
+            System.out.println("system: không tìm thấy mã mượn này");
+            reloadScene();
+        }
 
         if (request!=null){
             if (request.isHaveBook()){
@@ -117,7 +124,12 @@ public class SceneManagerTracking extends Scene{
     }
 
     private void onChooseDone() {
-        int choose = Integer.parseInt(this.chooseInput);
+        int choose = -1;
+        try {
+            choose = Integer.parseInt(this.chooseInput);
+        }catch (NumberFormatException e){
+            System.out.println(e.getMessage());
+        }
 
         switch (choose) {
             case 1:
