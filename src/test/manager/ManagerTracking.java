@@ -61,7 +61,7 @@ public class ManagerTracking extends ManagerLibAction<Tracking> {
     @Override
     public boolean saveData() {
         try{
-            FileOutputStream writeData = new FileOutputStream("data_tracking.ser");
+            FileOutputStream writeData = new FileOutputStream("data_tracking.txt");
             ObjectOutputStream writeStream = new ObjectOutputStream(writeData);
 
             writeStream.writeObject(list);
@@ -80,7 +80,7 @@ public class ManagerTracking extends ManagerLibAction<Tracking> {
         List<Tracking> listTracking = new ArrayList<>();
 
         try{
-            FileInputStream readData = new FileInputStream("data_tracking.ser");
+            FileInputStream readData = new FileInputStream("data_tracking.txt");
             ObjectInputStream readStream = new ObjectInputStream(readData);
             listTracking = (ArrayList<Tracking>) readStream.readObject();
             readStream.close();

@@ -86,7 +86,7 @@ public class ManagerRequest extends ManagerLibAction<Request> {
         List<Request> listRequest = new ArrayList<>();
 
         try{
-            FileInputStream readData = new FileInputStream("data_request.ser");
+            FileInputStream readData = new FileInputStream("data_request.txt");
             ObjectInputStream readStream = new ObjectInputStream(readData);
             listRequest = (ArrayList<Request>) readStream.readObject();
             readStream.close();
@@ -103,7 +103,7 @@ public class ManagerRequest extends ManagerLibAction<Request> {
     @Override
     public boolean saveData() {
         try{
-                FileOutputStream writeData = new FileOutputStream("data_request.ser");
+                FileOutputStream writeData = new FileOutputStream("data_request.txt");
             ObjectOutputStream writeStream = new ObjectOutputStream(writeData);
 
             writeStream.writeObject(list);

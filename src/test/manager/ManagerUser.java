@@ -44,7 +44,7 @@ public class ManagerUser extends ManagerLibObject<User> {
         List<User> listUser = null;
 
         try{
-            FileInputStream readData = new FileInputStream("data_user.ser");
+            FileInputStream readData = new FileInputStream("data_user.txt");
             ObjectInputStream readStream = new ObjectInputStream(readData);
             listUser = (ArrayList<User>) readStream.readObject();
             readStream.close();
@@ -61,7 +61,7 @@ public class ManagerUser extends ManagerLibObject<User> {
     @Override
     public boolean saveData() {
         try{
-            FileOutputStream writeData = new FileOutputStream("data_user.ser");
+            FileOutputStream writeData = new FileOutputStream("data_user.txt");
             ObjectOutputStream writeStream = new ObjectOutputStream(writeData);
 
             writeStream.writeObject(list);

@@ -58,7 +58,7 @@ public class ManagerBook extends ManagerLibObject<Book> {
         List<Book> listRequest = null;
 
         try{
-            FileInputStream readData = new FileInputStream("data_book.ser");
+            FileInputStream readData = new FileInputStream("data_book.txt");
             ObjectInputStream readStream = new ObjectInputStream(readData);
             listRequest = (ArrayList<Book>) readStream.readObject();
             readStream.close();
@@ -79,7 +79,7 @@ public class ManagerBook extends ManagerLibObject<Book> {
     @Override
     public boolean saveData() {
         try{
-            FileOutputStream writeData = new FileOutputStream("data_book.ser");
+            FileOutputStream writeData = new FileOutputStream("data_book.txt");
             ObjectOutputStream writeStream = new ObjectOutputStream(writeData);
 
             writeStream.writeObject(list);
