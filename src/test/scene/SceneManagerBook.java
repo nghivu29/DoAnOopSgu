@@ -65,8 +65,14 @@ public class SceneManagerBook extends Scene{
         System.out.print("Nhập tên sách: ");
         String bookNameInput = sc.nextLine();
         System.out.print("Nhập giá sách: ");
-        String bookPriceInput = sc.nextLine();
-        Book book = Book.create(bookNameInput, Integer.parseInt(bookPriceInput));
+        double bookPriceInput = 0;
+        try {
+            bookPriceInput = Double.parseDouble(sc.nextLine());
+        }catch (NumberFormatException e){
+            System.out.println(e.getMessage());
+            reloadScene();
+        }
+        Book book = Book.create(bookNameInput, bookPriceInput);
         book.setId(String.format("%d", manager.size()));
 
         manager.add(book);
