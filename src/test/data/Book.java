@@ -120,19 +120,8 @@ public class Book extends LibObject {
 
     @Override
     public String toString() {
-        return "Book{" +
-                "author=" + author +
-                ", imprint=" + imprint +
-                ", publishYear=" + publishYear +
-                ", pageNumber=" + pageNumber +
-                ", price=" + price +
-                ", bookClassification=" + bookClassification +
-                ", bookStatus=" + bookStatus +
-                ", borrowStatus=" + borrowStatus +
-                ", description='" + description + '\'' +
-                ", id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+        return String.format("|%20s|%20s|%20s|%20s|%20s|%20s|%20s|"
+        , id, name, price, borrowStatus, bookStatus, author, bookClassification);
     }
 }
 

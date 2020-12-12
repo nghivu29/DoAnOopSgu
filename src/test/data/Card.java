@@ -91,4 +91,18 @@ public class Card extends LibObject{
     public void setCardStatus(CardStatus cardStatus) {
         this.cardStatus = cardStatus;
     }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "valid_from=" + valid_from +
+                ", valid_thru=" + valid_thru +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", power=" + power +
+                ", cardStatus=" + cardStatus +
+                ", id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

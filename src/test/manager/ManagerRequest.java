@@ -78,9 +78,11 @@ public class ManagerRequest extends ManagerLibAction<Request> {
     public ManagerRequest getRequestsByUser(User user) {
         ManagerRequest manager = new ManagerRequest();
         manager.loadData();
-        manager.list = (Request[]) Arrays.stream(list)
-                .filter(request -> request.getUser().getName().equals(user.getName()))
-                .toArray();
+        for (int i = 0; i < length; i++) {
+            if (get(i).getUser().getName().equals(user.getName())){
+                manager.add(get(i));
+            }
+        }
         return manager;
     }
 

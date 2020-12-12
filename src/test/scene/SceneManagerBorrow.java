@@ -76,6 +76,8 @@ public class SceneManagerBorrow extends Scene{
 
     private void viewAllRequest() {
         ManagerRequest manager = new ManagerRequest();
+        System.out.println(String.format("|%20s|%20s|%20s|%20s|%20s|",
+                "id", "userName" , "bookName", "dateRequest", "haveBook"));
         manager.loadData();
         manager.viewAllElement();
         reloadScene();

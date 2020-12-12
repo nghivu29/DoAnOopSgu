@@ -49,6 +49,8 @@ public class SceneMainMenuMember extends Scene{
     }
 
     protected void showMyRequestBorrowBook() {
+        System.out.println(String.format("|%20s|%20s|%20s|%20s|%20s|",
+                "id", "userName" , "bookName", "dateRequest", "haveBook"));
         ManagerRequest manager = new ManagerRequest();
         manager.loadData();
         manager.getRequestsByUser(user).viewAllElement();
@@ -124,6 +126,8 @@ public class SceneMainMenuMember extends Scene{
      */
     protected void viewAllBook(){
         ManagerBook manager = new ManagerBook();
+        System.out.println(String.format("|%20s|%20s|%20s|%20s|%20s|%20s|%20s|"
+                , "id", "name", "price", "borrowStatus", "bookStatus", "author", "bookClassification"));
         manager.loadData();
         manager.viewAllElement();
         reloadScene();
@@ -136,6 +140,8 @@ public class SceneMainMenuMember extends Scene{
         System.out.println("Nhập vào tên sách (cần nhập đúng từng chữ)");
         inputListener();
 
+        System.out.println(String.format("|%20s|%20s|%20s|%20s|%20s|%20s|%20s|"
+                , "id", "name", "price", "borrowStatus", "bookStatus", "author", "bookClassification"));
         ManagerBook manager = new ManagerBook();
         manager.loadData();
         manager.getElementsByName(input).viewAllElement();

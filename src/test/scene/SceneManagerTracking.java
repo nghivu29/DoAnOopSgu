@@ -63,6 +63,7 @@ public class SceneManagerTracking extends Scene{
             if (request.isHaveBook()){
                 if (request.getBook().getBorrowStatus()!= BorrowStatus.UNAVAILABLE){
                     Tracking tracking = Tracking.create(user, request);
+                    tracking.setId(request.getId());
                     managerTracking.add(tracking);
                     managerRequest.saveData();
                     managerTracking.saveData();
@@ -82,13 +83,53 @@ public class SceneManagerTracking extends Scene{
         Scanner sc = new Scanner(System.in);
         System.out.print("Nhập mã sách: ");
         String bookId = sc.nextLine();
+        System.out.print("Nhập trạng thái sách (1: NEW, 2: LIKE_NEW, 3: GOOD, 4: ACCEPTABLE, 5: UNREADABLE, 6: LOST): ");
+        String inputBookStatus = sc.nextLine();
+        BookStatus bookStatus = null;
+
+//        NEW,
+//                LIKE_NEW,
+//                VERY_GOOD,
+//                GOOD,
+//                ACCEPTABLE,
+//                FORNOTFUSSYREADER,
+//                UNREADABLE,
+//                LOST
+
+        try {
+            switch (Integer.parseInt(inputBookStatus)){
+                case 1:
+                    bookStatus = BookStatus.NEW;
+                    break;
+                case 2:
+                    bookStatus = BookStatus.LIKE_NEW;
+                    break;
+                case 3:
+                    bookStatus = BookStatus.GOOD;
+                    break;
+                case 4:
+                    bookStatus = BookStatus.ACCEPTABLE;
+                    break;
+                case 5:
+                    bookStatus = BookStatus.UNREADABLE;
+                    break;
+                case 6:
+                    bookStatus = BookStatus.LOST;
+                    break;
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
         Tracking tracking = managerTracking.getTrackingByBookId(bookId);
         if (tracking == null) {
             reloadScene();
             return;
         }
-        tracking.setBookStatusAfter(tracking.getBookStatusBefore());
+        if (bookStatus == null)
+            tracking.setBookStatusAfter(tracking.getBookStatusBefore());
+        else tracking.setBookStatusAfter(bookStatus);
+
         tracking.setDateReturn(LocalDate.now());
         managerTracking.saveData();
 
@@ -102,6 +143,8 @@ public class SceneManagerTracking extends Scene{
     }
 
     private void viewAllTracking() {
+        System.out.println(String.format("|%20s|%20s|%20s|%20s|%20s|%20s|%20s|%20s|",
+                "id", "userId", "userName", "dateBorrow", "dateReturnDeadline", "dateReturn", "bookStatusBefore", "bookStatusAfter"));
         ManagerTracking manager = new ManagerTracking();
         manager.loadData();
         manager.viewAllElement();

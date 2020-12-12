@@ -30,16 +30,20 @@ public class Tracking extends LibAction{
 
     @Override
     public String toString() {
-        return "Tracking{" +
-                "book_id=" + book.getId() +
-                //", borrower=" + card.getName() +
-                ", admin_deliver=" + user.getName() +
-                ", dateBorrow=" + dateBorrow +
-                ", dateReturn=" + dateReturn +
-                ", dateReturnDeadline=" + dateReturnDeadline +
-                ", bookStatusBefore=" + bookStatusBefore +
-                ", bookStatusAfter=" + bookStatusAfter +
-                '}';
+//        return "Tracking{" +
+//                "book=" + book +
+//                ", card=" + card +
+//                ", dateBorrow=" + dateBorrow +
+//                ", dateReturn=" + dateReturn +
+//                ", dateReturnDeadline=" + dateReturnDeadline +
+//                ", bookStatusBefore=" + bookStatusBefore +
+//                ", bookStatusAfter=" + bookStatusAfter +
+//                ", description='" + description + '\'' +
+//                ", user=" + user +
+//                ", id='" + id + '\'' +
+//                '}';
+        return String.format("|%20s|%20s|%20s|%20s|%20s|%20s|%20s|%20s|",
+                id, user.getId(), user.getName(), dateBorrow, dateReturnDeadline, dateReturn, bookStatusBefore, bookStatusAfter);
     }
 
     // CÁC SETTER VÀ GETTER

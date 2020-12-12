@@ -22,16 +22,11 @@ public class Request extends Tracking {
 
     @Override
     public String toString() {
-        return "Request{" +
-                "id='" + id + '\'' +
-                "bookName='" + bookName + '\'' +
-                ", dateRequest=" + dateRequest +
-                ", haveBook=" + haveBook +
-                ", username=" + user.getName() +
-                '}';
+        return String.format("|%20s|%20s|%20s|%20s|%20s|",
+                id, user.getName(), bookName, dateRequest, haveBook);
     }
 
-    // CÁC GETTER VÀ SETTER
+// CÁC GETTER VÀ SETTER
 
     public String getBookName() {
         return bookName;
