@@ -4,6 +4,7 @@ import test.data.User;
 import test.manager.ManagerScene;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * làm tương tự scene login
@@ -32,10 +33,10 @@ public class SceneMainMenuAdmin extends SceneMainMenuMember{
         // thêm các chức năng của menu ở đây. Hãy để vị trí functions[0] là showMenu
         changeFunction(0, this::showMenu);
         addFunction(this::gotoSceneManagerBorrow);
+        addFunction(this::gotoSceneManagerTracking);
         addFunction(this::gotoSceneManagerBook);
         addFunction(this::gotoSceneManagerUser);
-        addFunction(this::gotoSceneManagerTracking);
-        
+
         return true;
     }
 
@@ -57,47 +58,6 @@ public class SceneMainMenuAdmin extends SceneMainMenuMember{
         ManagerScene.getInstance().display();
     }
 
-    @Override
-    protected void onChooseDone() {
-        int choose = -1;
-        try {
-            choose = Integer.parseInt(this.input);
-        }catch (NumberFormatException e){
-            System.out.println(e.getMessage());
-        }
-
-        switch (choose){
-            case 1:
-                functions.get(1).run();
-                break;
-            case 2:
-                functions.get(2).run();
-                break;
-            case 3:
-                functions.get(3).run();
-                break;
-            case 4:
-                functions.get(4).run();
-                break;
-            case 5:
-                functions.get(5).run();
-                break;
-            case 6:
-                functions.get(6).run();
-                break;
-            case 7:
-                functions.get(7).run();
-                break;
-            case 8:
-                functions.get(8).run();
-            case 9:
-                functions.get(9).run();
-                break;
-            default:
-                reloadScene();
-        }
-    }
-
     protected void gotoSceneManagerBorrow() {
         System.out.println("system: Chuyển đến Scene quản lý yêu cầu mượn sách");
         ManagerScene.getInstance().pushScene(SceneManagerBorrow.create(user));
@@ -111,12 +71,13 @@ public class SceneMainMenuAdmin extends SceneMainMenuMember{
         System.out.println("2. Tìm sách theo tên");
         System.out.println("3. Mượn sách");
         System.out.println("4. Xem yêu cầu mượn sách đã gửi");
-        System.out.println("5. Quay lại Scene bắt đầu");
+        System.out.println("5. Theo dõi lịch mượn trả sách");
+        System.out.println("6. Quay lại Scene bắt đầu");
         System.out.println("***Phần chức năng của admin");
-        System.out.println("6. Quản lý các yêu cầu mượn sách");
-        System.out.println("7. Quản lý sách");
-        System.out.println("8. Quản lý user");
-        System.out.println("9. Theo dõi mượn trả sách");
+        System.out.println("7. Quản lý các yêu cầu mượn sách");
+        System.out.println("8. Theo dõi mượn trả sách");
+        System.out.println("9. Quản lý sách");
+        System.out.println("10. Quản lý user");
 
         System.out.println("Nhập vào số bạn chọn bên dưới");
         inputListener();
@@ -130,7 +91,7 @@ public class SceneMainMenuAdmin extends SceneMainMenuMember{
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("system: Tải lại Scene menu của admin");
+        System.out.println("system: tải lại " + this.name);
         ManagerScene.getInstance().replaceScene(SceneMainMenuAdmin.create(user));
         ManagerScene.getInstance().display();
     }

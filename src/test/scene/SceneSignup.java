@@ -66,7 +66,7 @@ public class SceneSignup extends Scene{
         }else {
             System.out.println("system: Đăng kí thất bại do tên tài khoảng bị trùng");
         }
-        backToStartScene();
+        backScene();
     }
 
     private void inputListener() {
@@ -89,11 +89,5 @@ public class SceneSignup extends Scene{
         if (managerUser.getElementsByName(nameInput).length>0)
             return true;
         return false;
-    }
-
-    private void backToStartScene(){
-        System.out.println("system: trở về Scene bắt đầu");
-        ManagerScene.getInstance().popScene();
-        ManagerScene.getInstance().display();
     }
 }

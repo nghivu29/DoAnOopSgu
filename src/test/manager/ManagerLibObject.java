@@ -26,10 +26,11 @@ public class ManagerLibObject <T extends LibObject> extends Manager<T> {
      * @return phần tử cẩn tìm
      */
     public T getElementById(String id){
-        return Arrays.stream(list)
-                .filter(t -> t.getId().equals(id))
-                .findFirst()
-                .get();
+        for (int i = 0; i < length; i++) {
+            if (get(i).getId().equals(id))
+                return get(i);
+        }
+        return null;
     }
 
     /**
@@ -38,8 +39,12 @@ public class ManagerLibObject <T extends LibObject> extends Manager<T> {
      * @return true nếu phần tử này có trong list và đã xóa thành công
      */
     public boolean removeElementById(String id){
-//        T obj = getElementById(id);
-//        return list.remove(obj);
+        for (int i = 0; i < length; i++) {
+            if (get(i).getId().equals(id)){
+                remove(i);
+                return true;
+            }
+        }
         return false;
     }
 

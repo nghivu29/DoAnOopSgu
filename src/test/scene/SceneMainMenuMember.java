@@ -4,6 +4,7 @@ import test.data.User;
 import test.manager.ManagerBook;
 import test.manager.ManagerRequest;
 import test.manager.ManagerScene;
+import test.manager.ManagerTracking;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -11,7 +12,7 @@ import java.util.Scanner;
 /**
  * làm tương tự scene login
  */
-public class SceneMainMenuMember extends Scene{
+public class SceneMainMenuMember extends MenuHelper{
     protected User user;
 
 
@@ -43,9 +44,19 @@ public class SceneMainMenuMember extends Scene{
         addFunction(this::viewBookByName);
         addFunction(this::gotoSceneRequestBorrowBook);
         addFunction(this::showMyRequestBorrowBook);
-        addFunction(this::backToStartScene);
+        addFunction(this::showMyTracking);
+        addFunction(this::backScene);
 
         return true;
+    }
+
+    private void showMyTracking() {
+        System.out.println(String.format("|%20s|%20s|%20s|%20s|%20s|%20s|%20s|%20s|",
+                "id", "userId", "userName", "dateBorrow", "dateReturnDeadline", "dateReturn", "bookStatusBefore", "bookStatusAfter"));
+        ManagerTracking manager = new ManagerTracking();
+        manager.loadData();
+        manager.getTrackingByUser(user).viewAllElement();
+        reloadScene();
     }
 
     protected void showMyRequestBorrowBook() {
@@ -63,62 +74,15 @@ public class SceneMainMenuMember extends Scene{
         ManagerScene.getInstance().display();
     }
 
-
-    protected void backToStartScene() {
-        System.out.println("system: trở về Scene bắt đầu");
-        ManagerScene.getInstance().popScene();
-        ManagerScene.getInstance().display();
-    }
-
     protected void showMenu() {
         System.out.println("1. Xem tất cả sách trong thư viện");
         System.out.println("2. Tìm sách theo tên");
         System.out.println("3. Mượn sách");
         System.out.println("4. Xem yêu cầu mượn sách đã gửi");
-        System.out.println("5. Quay lại Scene bắt đầu");
+        System.out.println("5. Theo dõi lịch mượn trả sách");
+        System.out.println("6. Quay lại Scene bắt đầu");
         System.out.println("Nhập vào số bạn chọn bên dưới");
-        inputListener();
-        onChooseDone();
-    }
-
-    /**
-     * Được gọi khi chon xọng chức năng trên menu chính
-     */
-    protected void onChooseDone() {
-        int choose = -1;
-        try {
-            choose = Integer.parseInt(this.input);
-        }catch (NumberFormatException e){
-            System.out.println(e.getMessage());
-        }
-
-        switch (choose){
-            case 1:
-                functions.get(1).run();
-                break;
-            case 2:
-                functions.get(2).run();
-                break;
-            case 3:
-                functions.get(3).run();
-                break;
-            case 4:
-                functions.get(4).run();
-                break;
-            case 5:
-                functions.get(5).run();
-                break;
-            default:
-                reloadScene();
-        }
-    }
-
-    /**
-     * Sử dụng khi cần nhập vào gì đó
-     */
-    protected void inputListener() {
-        System.out.print("Your input: ");
-        input = new Scanner(System.in).nextLine();
+        super.showMenu();
     }
 
     /**
@@ -137,8 +101,8 @@ public class SceneMainMenuMember extends Scene{
      * Xem sách theo tên
      */
     protected void viewBookByName(){
-        System.out.println("Nhập vào tên sách (cần nhập đúng từng chữ)");
-        inputListener();
+        System.out.print("Nhập vào tên sách (cần nhập đúng từng chữ): ");
+        input = new Scanner(System.in).nextLine();
 
         System.out.println(String.format("|%20s|%20s|%20s|%20s|%20s|%20s|%20s|"
                 , "id", "name", "price", "borrowStatus", "bookStatus", "author", "bookClassification"));
@@ -149,12 +113,7 @@ public class SceneMainMenuMember extends Scene{
     }
 
     protected void reloadScene(){
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-        System.out.println("system: Tải lại Scene menu của thành viên");
+        super.reloadScene();
         ManagerScene.getInstance().replaceScene(SceneMainMenuMember.create(user));
         ManagerScene.getInstance().display();
     }

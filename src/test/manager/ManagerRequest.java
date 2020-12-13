@@ -71,13 +71,21 @@ public class ManagerRequest extends ManagerLibAction<Request> {
 
     public void acceptAllRequest(){
         for (int i = 0; i < length; i++) {
-            acceptRequest(get(i));
+            if (!get(i).isHaveBook())
+                acceptRequest(get(i));
+        }
+    }
+
+    public void acceptRequestWithID(String id){
+        for (int i = 0; i < length; i++) {
+            if (get(i).getId().equals(id)){
+                acceptRequest(get(i));
+            }
         }
     }
 
     public ManagerRequest getRequestsByUser(User user) {
         ManagerRequest manager = new ManagerRequest();
-        manager.loadData();
         for (int i = 0; i < length; i++) {
             if (get(i).getUser().getName().equals(user.getName())){
                 manager.add(get(i));

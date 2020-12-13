@@ -50,11 +50,7 @@ public class User extends LibObject{
 
     @Override
     public String toString() {
-        return "User{" +
-                "password='" + password + '\'' +
-                ", card=" + card +
-                ", id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+        return String.format("|%20s|%20s|%20s|%20s|%20s|%20s|",
+                id, name, password, card.power, card.cardStatus, card.phone);
     }
 }

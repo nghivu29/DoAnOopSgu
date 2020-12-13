@@ -2,7 +2,10 @@ package test.scene;
 
 import test.data.InitProtocol;
 import test.data.LibObject;
+import test.manager.Manager;
+import test.manager.ManagerScene;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,5 +46,21 @@ public class Scene extends LibObject implements InitProtocol {
 
     public Runnable changeFunction(int i, Runnable function){
         return functions.set(i, function);
+    }
+
+    protected void reloadScene(){
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println("system: tải lại " + this.name);
+    }
+
+    protected void backScene(){
+        ManagerScene manager = ManagerScene.getInstance();
+        manager.popScene();
+        System.out.println("system: trở về "+manager.get(manager.length-1).getName());
+        manager.display();
     }
 }

@@ -3,6 +3,7 @@ package test.manager;
 import test.data.Book;
 import test.data.Request;
 import test.data.Tracking;
+import test.data.User;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -30,6 +31,16 @@ public class ManagerTracking extends ManagerLibAction<Tracking> {
      */
     ManagerTracking getTrackingByDateBorrow(LocalDate date) {
         return null;
+    }
+
+    public ManagerTracking getTrackingByUser(User user) {
+        ManagerTracking manager = new ManagerTracking();
+        for (int i = 0; i < length; i++) {
+            if (get(i).getUser().getName().equals(user.getName())){
+                manager.add(get(i));
+            }
+        }
+        return manager;
     }
 
     /**

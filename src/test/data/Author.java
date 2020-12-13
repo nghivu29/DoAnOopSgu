@@ -19,5 +19,8 @@ public class Author extends LibObject{
         return true;
     }
 
-
+    @Override
+    public String toString() {
+        return name;
+    }
 }

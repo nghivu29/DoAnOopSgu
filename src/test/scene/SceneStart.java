@@ -4,10 +4,7 @@ import test.manager.ManagerScene;
 
 import java.util.Scanner;
 
-public class SceneStart extends Scene{
-
-    // Lưu đữ liệu người dùng nhập vào
-    private String input;
+public class SceneStart extends MenuHelper{
 
     public static SceneStart create(){
         SceneStart scene = new SceneStart();
@@ -27,8 +24,13 @@ public class SceneStart extends Scene{
         addFunction(this::showMenu);
         addFunction(this::gotoSceneLogin);
         addFunction(this::gotoSceneSignup);
-        
+        addFunction(this::exit);
+
         return true;
+    }
+
+    private void exit() {
+        System.exit(0);
     }
 
     private void gotoSceneSignup() {
@@ -43,46 +45,15 @@ public class SceneStart extends Scene{
         ManagerScene.getInstance().display();
     }
 
-    private void reloadScene() {
+    protected void reloadScene() {
         System.out.println("system: Tải lại Scene bắt đầu");
         ManagerScene.getInstance().replaceScene(SceneStart.create());
         ManagerScene.getInstance().display();
     }
 
     public void showMenu(){
-        Scanner sc = new Scanner(System.in);
         System.out.println("1.Đăng nhập\n2.Đăng Kí\n3.Thoát");
         System.out.println("Nhập vào số bạn chọn bên dưới");
-        inputListener();
-        onChooseDone();
-
-    }
-
-    private void onChooseDone() {
-        int choose = -1;
-        try {
-            choose = Integer.parseInt(this.input);
-        }catch (NumberFormatException e){
-            System.out.println(e.getMessage());
-        }
-
-
-        switch (choose){
-            case 1:
-                functions.get(1).run();
-                break;
-            case 2:
-                functions.get(2).run();
-            case 3:
-                System.exit(0);
-            default:
-                reloadScene();
-        }
-
-    }
-
-    private void inputListener() {
-        System.out.print("Your input: ");
-        input = new Scanner(System.in).nextLine();
+        super.showMenu();
     }
 }

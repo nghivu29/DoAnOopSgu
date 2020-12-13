@@ -7,10 +7,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class SceneManagerTracking extends Scene{
+public class SceneManagerTracking extends MenuHelper{
     private final User user;
-
-    private String chooseInput;
 
     public SceneManagerTracking(User user) {
         this.user = user;
@@ -52,6 +50,9 @@ public class SceneManagerTracking extends Scene{
         managerRequest.loadData();
         Request request = null;
 
+        ManagerBook managerBook = new ManagerBook();
+        managerBook.loadData();
+
         try {
             request = managerRequest.getRequestsById(code);
         }catch (Exception e){
@@ -61,14 +62,14 @@ public class SceneManagerTracking extends Scene{
 
         if (request!=null){
             if (request.isHaveBook()){
-                if (request.getBook().getBorrowStatus()!= BorrowStatus.UNAVAILABLE){
-                    Tracking tracking = Tracking.create(user, request);
-                    tracking.setId(request.getId());
-                    managerTracking.add(tracking);
-                    managerRequest.saveData();
-                    managerTracking.saveData();
-                    System.out.println("system: Đã bàn giao sách");
-                }
+                Tracking tracking = Tracking.create(request.getUser(), request);
+                tracking.setId(request.getId());
+                managerTracking.add(tracking);
+                managerRequest.saveData();
+                managerTracking.saveData();
+                managerBook.getElementById(request.getBook().getId()).setBorrowStatus(BorrowStatus.UNAVAILABLE);
+                managerBook.saveData();
+                System.out.println("system: bàn giao sách thành công");
             }
         }else {
             System.out.println("system: hãy kiểm tra lại mã mượn sách");
@@ -86,15 +87,6 @@ public class SceneManagerTracking extends Scene{
         System.out.print("Nhập trạng thái sách (1: NEW, 2: LIKE_NEW, 3: GOOD, 4: ACCEPTABLE, 5: UNREADABLE, 6: LOST): ");
         String inputBookStatus = sc.nextLine();
         BookStatus bookStatus = null;
-
-//        NEW,
-//                LIKE_NEW,
-//                VERY_GOOD,
-//                GOOD,
-//                ACCEPTABLE,
-//                FORNOTFUSSYREADER,
-//                UNREADABLE,
-//                LOST
 
         try {
             switch (Integer.parseInt(inputBookStatus)){
@@ -137,8 +129,10 @@ public class SceneManagerTracking extends Scene{
         managerBook.loadData();
         Book book = managerBook.getBookById(bookId);
         book.setBorrowStatus(BorrowStatus.AVAILABLE);
+        book.setBookStatus(bookStatus);
         managerBook.saveData();
 
+        System.out.println("system: nhận sách thành công");
         reloadScene();
     }
 
@@ -157,54 +151,17 @@ public class SceneManagerTracking extends Scene{
         ManagerScene.getInstance().display();
     }
 
-    private void showMenu() {
+    protected void showMenu() {
         System.out.println("1. Xem tất cả tiến trình mượn trả sách");
         System.out.println("2. Bàn giao sách cho người mượn");
         System.out.println("3. Nhận sách từ người mượn");
         System.out.println("4. Quay lại menu của admin");
-        inputListener();
-        onChooseDone();
+        super.showMenu();
     }
 
-    private void onChooseDone() {
-        int choose = -1;
-        try {
-            choose = Integer.parseInt(this.chooseInput);
-        }catch (NumberFormatException e){
-            System.out.println(e.getMessage());
-        }
-
-        switch (choose) {
-            case 1:
-                functions.get(1).run();
-                break;
-            case 2:
-                functions.get(2).run();
-                break;
-            case 3:
-                functions.get(3).run();
-                break;
-            case 4:
-                functions.get(4).run();
-
-            default:
-                reloadScene();
-        }
-    }
-
-    private void reloadScene() {
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-        System.out.println("system: Tải lại Scene theo dõi mượn trả");
+    protected void reloadScene() {
+        super.reloadScene();
         ManagerScene.getInstance().replaceScene(SceneManagerTracking.create(user));
         ManagerScene.getInstance().display();
-    }
-
-    private void inputListener() {
-        System.out.print("Your input: ");
-        chooseInput = new Scanner(System.in).nextLine();
     }
 }

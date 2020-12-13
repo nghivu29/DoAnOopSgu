@@ -70,7 +70,7 @@ public class SceneLogin extends Scene{
         {
             System.out.println("Đăng nhập thất bại");
             //System.out.println("Tải lại scene này. Viết code tải lại sau dòng này. Đây là 1 vd lặp không dùng do while");
-            backToStartScene();
+            backScene();
             return;
         }
 
@@ -117,12 +117,4 @@ public class SceneLogin extends Scene{
         System.out.println("Code chua duoc viet");
     }
 
-    /**
-     * tải lại scene này. Đây là 1 ví dụ để lặp lại mà không dùng do while.
-     */
-    void backToStartScene(){
-        System.out.println("system: trở về Scene bắt đầu");
-        ManagerScene.getInstance().popScene();
-        ManagerScene.getInstance().display();
-    }
 }
