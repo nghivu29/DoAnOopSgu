@@ -62,8 +62,9 @@ public class SceneManagerTracking extends MenuHelper{
 
         if (request!=null){
             if (request.isHaveBook()){
-                Tracking tracking = Tracking.create(request.getUser(), request);
+                Tracking tracking = Tracking.create(user, request);
                 tracking.setId(request.getId());
+                tracking.setDeliver(user);
                 managerTracking.add(tracking);
                 managerRequest.saveData();
                 managerTracking.saveData();
@@ -122,23 +123,27 @@ public class SceneManagerTracking extends MenuHelper{
             tracking.setBookStatusAfter(tracking.getBookStatusBefore());
         else tracking.setBookStatusAfter(bookStatus);
 
+        tracking.setReceiver(user);
         tracking.setDateReturn(LocalDate.now());
-        managerTracking.saveData();
 
         ManagerBook managerBook = new ManagerBook();
         managerBook.loadData();
         Book book = managerBook.getBookById(bookId);
         book.setBorrowStatus(BorrowStatus.AVAILABLE);
         book.setBookStatus(bookStatus);
+
+
         managerBook.saveData();
+        managerTracking.saveData();
+
 
         System.out.println("system: nhận sách thành công");
         reloadScene();
     }
 
     private void viewAllTracking() {
-        System.out.println(String.format("|%20s|%20s|%20s|%20s|%20s|%20s|%20s|%20s|",
-                "id", "userId", "userName", "dateBorrow", "dateReturnDeadline", "dateReturn", "bookStatusBefore", "bookStatusAfter"));
+        System.out.println(String.format("|%20s|%20s|%20s|%20s|%20s|%20s|%20s|%20s|%20s|%20s|",
+                "deliver", "receiver", "borrower", "bookId", "bookName", "dateBorrow", "dateReturnDeadline", "dateReturn", "bookStatusBefore", "bookStatusAfter"));
         ManagerTracking manager = new ManagerTracking();
         manager.loadData();
         manager.viewAllElement();

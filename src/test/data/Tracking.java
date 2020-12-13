@@ -15,11 +15,19 @@ public class Tracking extends LibAction{
     private BookStatus bookStatusBefore;
     private BookStatus bookStatusAfter;
     private String description;
+    private User borrower;
+    private User receiver;
+    private User deliver;
 
     public static Tracking create(User admin, Request request){
         request.getBook().setBorrowStatus(BorrowStatus.UNAVAILABLE);
+        User unknown = new User();
+        unknown.setName("unknown");
         Tracking tracking = new Tracking();
         tracking.setUser(admin);
+        tracking.setDeliver(unknown);
+        tracking.setReceiver(unknown);
+        tracking.setBorrower(request.getUser());
         tracking.setBook(request.getBook());
         tracking.setCard(request.getCard());
         tracking.setDateBorrow(LocalDate.now());
@@ -30,14 +38,30 @@ public class Tracking extends LibAction{
 
     @Override
     public String toString() {
-        return String.format("|%20s|%20s|%20s|%20s|%20s|%20s|%20s|%20s|",
-                id, user.getId(), user.getName(), dateBorrow, dateReturnDeadline, dateReturn, bookStatusBefore, bookStatusAfter);
+        return String.format("|%20s|%20s|%20s|%20s|%20s|%20s|%20s|%20s|%20s|%20s|",
+                deliver.getName(), receiver.getName(), borrower.getName(), book.getId(), book.getName(), dateBorrow, dateReturnDeadline, dateReturn, bookStatusBefore, bookStatusAfter);
     }
 
     // CÁC SETTER VÀ GETTER
 
     public Book getBook() {
         return book;
+    }
+
+    public User getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
+    }
+
+    public User getDeliver() {
+        return deliver;
+    }
+
+    public void setDeliver(User deliver) {
+        this.deliver = deliver;
     }
 
     public void setBook(Book book) {
@@ -98,5 +122,13 @@ public class Tracking extends LibAction{
 
     public void setCard(Card card) {
         this.card = card;
+    }
+
+    public User getBorrower() {
+        return borrower;
+    }
+
+    public void setBorrower(User borrower) {
+        this.borrower = borrower;
     }
 }

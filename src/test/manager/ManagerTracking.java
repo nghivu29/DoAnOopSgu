@@ -36,7 +36,7 @@ public class ManagerTracking extends ManagerLibAction<Tracking> {
     public ManagerTracking getTrackingByUser(User user) {
         ManagerTracking manager = new ManagerTracking();
         for (int i = 0; i < length; i++) {
-            if (get(i).getUser().getName().equals(user.getName())){
+            if (get(i).getBorrower().getId().equals(user.getId())){
                 manager.add(get(i));
             }
         }
@@ -59,15 +59,12 @@ public class ManagerTracking extends ManagerLibAction<Tracking> {
     }
 
     public Tracking getTrackingByBookId(String id){
-        Tracking tracking = null;
-         try {
-             tracking = Arrays.stream(list).filter(t -> t.getBook().getId().equals(id))
-                     .findFirst()
-                     .get();
-         }catch (Exception e){
-             System.out.println("system: Kiểm tra lại mã sách");
-         }
-         return tracking;
+        for (int i = 0; i < length; i++) {
+            if (get(i).getBook().getId().equals(id) && get(i).getReceiver().getName().equals("unknown")){
+                return get(i);
+            }
+        }
+         return null;
     }
 
     @Override

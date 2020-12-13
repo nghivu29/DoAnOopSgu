@@ -48,10 +48,14 @@ public class SceneSignup extends Scene{
             card.setAddress(addressInput);
             card.setValid_from(LocalDate.now());
             card.setValid_thru(LocalDate.now().plusYears(1));
-            card.setId(String.format("M%d", managerUser.length));
-            if (adminCodeInput.equals("admin"))
+            if (adminCodeInput.equals("admin")){
+                card.setId(String.format("A%d", managerUser.length));
                 card.setPower(Power.ADMIN);
-            else card.setPower(Power.MEMBER);
+            }
+            else {
+                card.setId(String.format("M%d", managerUser.length));
+                card.setPower(Power.MEMBER);
+            }
 
             User user = User.create(card, passwordInput);
             user.setId(card.getId());

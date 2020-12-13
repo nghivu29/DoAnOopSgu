@@ -51,8 +51,8 @@ public class SceneMainMenuMember extends MenuHelper{
     }
 
     private void showMyTracking() {
-        System.out.println(String.format("|%20s|%20s|%20s|%20s|%20s|%20s|%20s|%20s|",
-                "id", "userId", "userName", "dateBorrow", "dateReturnDeadline", "dateReturn", "bookStatusBefore", "bookStatusAfter"));
+        System.out.println(String.format("|%20s|%20s|%20s|%20s|%20s|%20s|%20s|%20s|%20s|%20s|",
+                "deliver", "receiver", "borrower", "bookId", "bookName", "dateBorrow", "dateReturnDeadline", "dateReturn", "bookStatusBefore", "bookStatusAfter"));
         ManagerTracking manager = new ManagerTracking();
         manager.loadData();
         manager.getTrackingByUser(user).viewAllElement();
