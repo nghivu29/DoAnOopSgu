@@ -1,5 +1,6 @@
 package test.scene;
 
+import test.data.CardStatus;
 import test.data.User;
 import test.manager.ManagerScene;
 import test.manager.ManagerUser;
@@ -68,8 +69,14 @@ public class SceneLogin extends Scene{
     void gotoMainMenu(User user){
         if (user == null)
         {
-            System.out.println("Đăng nhập thất bại");
+            System.out.println("system: Đăng nhập thất bại");
             //System.out.println("Tải lại scene này. Viết code tải lại sau dòng này. Đây là 1 vd lặp không dùng do while");
+            backScene();
+            return;
+        }
+
+        if (user.getCard().getCardStatus() == CardStatus.BLOCK){
+            System.out.println("system: Tài khoảng này đã bị block");
             backScene();
             return;
         }
@@ -95,7 +102,7 @@ public class SceneLogin extends Scene{
      */
     void gotoMainMenuMember(){
         System.out.println("system: Chuyển đến menu dành cho Member");
-        ManagerScene.getInstance().replaceScene(SceneMainMenuMember.create(user));
+        ManagerScene.getInstance().replaceScene(SceneMainSceneMenuMember.create(user));
         ManagerScene.getInstance().display();
     }
 
@@ -105,7 +112,7 @@ public class SceneLogin extends Scene{
      */
     void gotoMainMenuAdmin(){
         System.out.println("system: Chuyển đến menu dành cho Admin");
-        ManagerScene.getInstance().replaceScene(SceneMainMenuAdmin.create(user));
+        ManagerScene.getInstance().replaceScene(SceneMainSceneMenuAdmin.create(user));
         ManagerScene.getInstance().display();
     }
 

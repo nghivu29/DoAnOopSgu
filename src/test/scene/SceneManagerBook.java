@@ -3,14 +3,12 @@ package test.scene;
 import test.data.Author;
 import test.data.Book;
 import test.data.User;
-import test.manager.Manager;
 import test.manager.ManagerBook;
 import test.manager.ManagerScene;
 
-import java.io.IOException;
 import java.util.Scanner;
 
-public class SceneManagerBook extends MenuHelper{
+public class SceneManagerBook extends SceneMenuHelper {
 
     private final User user;
 

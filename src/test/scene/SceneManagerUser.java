@@ -1,13 +1,14 @@
 package test.scene;
 
+import test.data.Book;
 import test.data.User;
+import test.manager.ManagerBook;
 import test.manager.ManagerScene;
 import test.manager.ManagerUser;
 
-import java.io.IOException;
 import java.util.Scanner;
 
-public class SceneManagerUser extends MenuHelper{
+public class SceneManagerUser extends SceneMenuHelper {
     private final User user;
 
     private String chooseInput;
@@ -46,7 +47,27 @@ public class SceneManagerUser extends MenuHelper{
     }
 
     private void editUser() {
+        ManagerUser manager = new ManagerUser();
+        manager.loadData();
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Nhập mã user: ");
+        String idInput = sc.nextLine();
+
+        User user = manager.getElementById(idInput);
+
+        if (user != null){
+            gotoSceneEdit(manager, user);
+        }else {
+            System.out.println("system: mã user không tồn tại");
+        }
         reloadScene();
+    }
+
+    private void gotoSceneEdit(ManagerUser manager, User user) {
+        System.out.println("system: Chuyển đến scene sửa thông tin user");
+        ManagerScene.getInstance().pushScene(SceneEditUser.create(manager, user));
+        ManagerScene.getInstance().display();
     }
 
     private void addUser() {

@@ -1,6 +1,5 @@
 package test;
 
-import test.scene.SceneLogin;
 import test.manager.ManagerScene;
 import test.scene.SceneStart;
 

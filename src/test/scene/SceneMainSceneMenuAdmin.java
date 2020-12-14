@@ -1,22 +1,22 @@
 package test.scene;
 
+import test.data.CardStatus;
 import test.data.User;
 import test.manager.ManagerScene;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * làm tương tự scene login
  */
-public class SceneMainMenuAdmin extends SceneMainMenuMember{
+public class SceneMainSceneMenuAdmin extends SceneMainSceneMenuMember {
 
-    public SceneMainMenuAdmin(User user) {
+    public SceneMainSceneMenuAdmin(User user) {
         super(user);
     }
 
-    public static SceneMainMenuAdmin create(User user){
-        SceneMainMenuAdmin scene = new SceneMainMenuAdmin(user);
+    public static SceneMainSceneMenuAdmin create(User user){
+        SceneMainSceneMenuAdmin scene = new SceneMainSceneMenuAdmin(user);
         if (!scene.init())
             return null;
         return scene;
@@ -41,24 +41,44 @@ public class SceneMainMenuAdmin extends SceneMainMenuMember{
     }
 
     private void gotoSceneManagerTracking() {
+        if (user.getCard().getCardStatus() == CardStatus.WARING){
+            System.out.println("system: tài khoảng của bạn đã bị cảnh báo không thể thực hiện chức năng này");
+            reloadScene();
+        }
+
         System.out.println("system: Chuyển đến Scene theo dõi mượn trả sách");
         ManagerScene.getInstance().pushScene(SceneManagerTracking.create(user));
         ManagerScene.getInstance().display();
     }
 
     private void gotoSceneManagerUser() {
+        if (user.getCard().getCardStatus() == CardStatus.WARING){
+            System.out.println("system: tài khoảng của bạn đã bị cảnh báo không thể thực hiện chức năng này");
+            reloadScene();
+        }
+
         System.out.println("system: Chuyển đến Scene quản user");
         ManagerScene.getInstance().pushScene(SceneManagerUser.create(user));
         ManagerScene.getInstance().display();
     }
 
     private void gotoSceneManagerBook() {
+        if (user.getCard().getCardStatus() == CardStatus.WARING){
+            System.out.println("system: tài khoảng của bạn đã bị cảnh báo không thể thực hiện chức năng này");
+            reloadScene();
+        }
+
         System.out.println("system: Chuyển đến Scene quản lý sách");
         ManagerScene.getInstance().pushScene(SceneManagerBook.create(user));
         ManagerScene.getInstance().display();
     }
 
     protected void gotoSceneManagerBorrow() {
+        if (user.getCard().getCardStatus() == CardStatus.WARING){
+            System.out.println("system: tài khoảng của bạn đã bị cảnh báo không thể thực hiện chức năng này");
+            reloadScene();
+        }
+
         System.out.println("system: Chuyển đến Scene quản lý yêu cầu mượn sách");
         ManagerScene.getInstance().pushScene(SceneManagerBorrow.create(user));
         ManagerScene.getInstance().display();
@@ -92,7 +112,7 @@ public class SceneMainMenuAdmin extends SceneMainMenuMember{
             System.out.println(e.getMessage());
         }
         System.out.println("system: tải lại " + this.name);
-        ManagerScene.getInstance().replaceScene(SceneMainMenuAdmin.create(user));
+        ManagerScene.getInstance().replaceScene(SceneMainSceneMenuAdmin.create(user));
         ManagerScene.getInstance().display();
     }
 }

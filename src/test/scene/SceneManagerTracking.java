@@ -3,11 +3,10 @@ package test.scene;
 import test.data.*;
 import test.manager.*;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class SceneManagerTracking extends MenuHelper{
+public class SceneManagerTracking extends SceneMenuHelper {
     private final User user;
 
     public SceneManagerTracking(User user) {

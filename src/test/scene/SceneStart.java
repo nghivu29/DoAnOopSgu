@@ -2,9 +2,7 @@ package test.scene;
 
 import test.manager.ManagerScene;
 
-import java.util.Scanner;
-
-public class SceneStart extends MenuHelper{
+public class SceneStart extends SceneMenuHelper {
 
     public static SceneStart create(){
         SceneStart scene = new SceneStart();

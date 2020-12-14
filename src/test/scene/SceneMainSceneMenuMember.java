@@ -1,30 +1,30 @@
 package test.scene;
 
+import test.data.CardStatus;
 import test.data.User;
 import test.manager.ManagerBook;
 import test.manager.ManagerRequest;
 import test.manager.ManagerScene;
 import test.manager.ManagerTracking;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 /**
  * làm tương tự scene login
  */
-public class SceneMainMenuMember extends MenuHelper{
+public class SceneMainSceneMenuMember extends SceneMenuHelper {
     protected User user;
 
 
     // Lưu đữ liệu người dùng nhập vào
     protected String input;
 
-    public SceneMainMenuMember(User user) {
+    public SceneMainSceneMenuMember(User user) {
         this.user = user;
     }
 
-    public static SceneMainMenuMember create(User user){
-        SceneMainMenuMember scene = new SceneMainMenuMember(user);
+    public static SceneMainSceneMenuMember create(User user){
+        SceneMainSceneMenuMember scene = new SceneMainSceneMenuMember(user);
         if (!scene.init())
             return null;
         return scene;
@@ -69,6 +69,11 @@ public class SceneMainMenuMember extends MenuHelper{
     }
 
     protected void gotoSceneRequestBorrowBook() {
+        if (user.getCard().getCardStatus()== CardStatus.WARING){
+            System.out.println("system: tài khoảng của bạn đã bị cảnh báo không thể thực hiện chức năng này");
+            reloadScene();
+        }
+
         System.out.println("system: chuyển đến Scene đăng kí mượn sách");
         ManagerScene.getInstance().pushScene(SceneRequestBorrowBook.create(user));
         ManagerScene.getInstance().display();
@@ -114,7 +119,7 @@ public class SceneMainMenuMember extends MenuHelper{
 
     protected void reloadScene(){
         super.reloadScene();
-        ManagerScene.getInstance().replaceScene(SceneMainMenuMember.create(user));
+        ManagerScene.getInstance().replaceScene(SceneMainSceneMenuMember.create(user));
         ManagerScene.getInstance().display();
     }
 

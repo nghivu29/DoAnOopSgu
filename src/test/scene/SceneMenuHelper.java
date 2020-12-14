@@ -2,7 +2,7 @@ package test.scene;
 
 import java.util.Scanner;
 
-public class MenuHelper extends Scene{
+public class SceneMenuHelper extends Scene{
     protected String chooseInput;
 
     protected void inputListener() {

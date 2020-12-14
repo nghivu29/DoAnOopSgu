@@ -4,10 +4,9 @@ import test.data.User;
 import test.manager.ManagerRequest;
 import test.manager.ManagerScene;
 
-import java.io.IOException;
 import java.util.Scanner;
 
-public class SceneManagerBorrow extends MenuHelper{
+public class SceneManagerBorrow extends SceneMenuHelper {
     private final User user;
 
     public SceneManagerBorrow(User user) {
